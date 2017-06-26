@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'STARWARS';
+    src: url('STARWARS.ttf') format('truetype');
+}
+
+h1, p, table {
+    font-family: 'STARWARS', sans-serif;
+}
+
