@@ -8,10 +8,20 @@ app.tableHandler = {
             var planetsData = planetsRequest.results;
             console.log(planetsData);
             
+            // clear screen after turning page:
+            var deleteRows = document.getElementsByClassName('table-row');
+            while (deleteRows.length > 0) {
+                deleteRows[0].remove();
+            }
+            // var deleteTurnPageParagraph = document.getElementById('turn-page-paragraph');
+            // deleteTurnPageParagraph.remove();
+
             // create table:
             var tableBody = document.getElementById('table-body');
+
             for (planetIndex = 0; planetIndex < planetsData.length; planetIndex++) {
                 var newRow = document.createElement('tr');
+                newRow.className = 'table-row';
 
                 var planetName = document.createElement('td');
                 var planetNameText = document.createTextNode(planetsData[planetIndex].name);
@@ -47,29 +57,50 @@ app.tableHandler = {
                 tableBody.appendChild(newRow);
             }
 
-            // create turn page buttons
-            var turnPageParagraph = document.getElementById('turn-page');
-            var turnPage = document.createElement('p');                
+            // add API URLs to turn page buttons
+            var previousPageButton = document.getElementById('previous');
+            // previousPageButton.value = previousPage;
             
-            var previousPageButtonSpan = document.createElement('span');
-            var previousPageButton = document.createElement('button');
-            previousPageButton.className = 'btn-primary';
-            previousPageButton.id = previousPage;
-            previousPageButton.textContent = 'Previous'
-            previousPageButtonSpan.appendChild(previousPageButton);
-            
-            var nextPageButtonSpan = document.createElement('span');
-            var nextPageButton = document.createElement('button');
-            nextPageButton.className = 'btn-primary';
-            nextPageButton.id = nextPage;
-            nextPageButton.textContent = 'Next'
-            nextPageButtonSpan.appendChild(nextPageButton);
+            var nextPageButton = document.getElementById('next');
+            // nextPageButton.value = nextPage;
 
-            turnPage.appendChild(previousPageButtonSpan);
-            turnPage.appendChild(nextPageButtonSpan);
-            turnPageParagraph.appendChild(turnPage);
-        });
+            // activate turn page buttons:
+            previousPageButton.onclick = function() {
+                if (previousPage != null) {
+                    app.tableHandler.loadTable(previousPage);
+                }
+            };
+
+            nextPageButton.onclick = function() {
+                if (nextPage != null) {
+                    app.tableHandler.loadTable(nextPage);
+                }
+            }; 
+        });   
+    },
+
+    showTurningPageButtons: function() {
+        // create turn page buttons
+        var turnPageParagraph = document.getElementById('turn-page');
+        var turnPage = document.createElement('p');
+        turnPage.id = 'turn-page-paragraph';
         
+        var previousPageButtonSpan = document.createElement('span');
+        var previousPageButton = document.createElement('button');
+        previousPageButton.className = 'btn-primary';
+        previousPageButton.id = 'previous';
+        previousPageButton.textContent = 'Previous'
+        previousPageButtonSpan.appendChild(previousPageButton);
+        
+        var nextPageButtonSpan = document.createElement('span');
+        var nextPageButton = document.createElement('button');
+        nextPageButton.className = 'btn-primary';
+        nextPageButton.id = 'next';
+        nextPageButton.textContent = 'Next'
+        nextPageButtonSpan.appendChild(nextPageButton);
+
+        turnPage.appendChild(previousPageButtonSpan);
+        turnPage.appendChild(nextPageButtonSpan);
+        turnPageParagraph.appendChild(turnPage);
     }
-    
 }
