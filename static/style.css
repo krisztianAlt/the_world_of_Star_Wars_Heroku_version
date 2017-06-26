@@ -7,3 +7,10 @@ h1, p, table {
     font-family: 'STARWARS', sans-serif;
 }
 
+#turn-page span {
+    padding: 0 2px 0 2px;
+}
+
+.btn-primary {
+    border-radius: 5px;
+}

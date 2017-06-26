@@ -8,6 +8,7 @@ app.tableHandler = {
             var planetsData = planetsRequest.results;
             console.log(planetsData);
             
+            // create table:
             var tableBody = document.getElementById('table-body');
             for (planetIndex = 0; planetIndex < planetsData.length; planetIndex++) {
                 var newRow = document.createElement('tr');
@@ -46,6 +47,27 @@ app.tableHandler = {
                 tableBody.appendChild(newRow);
             }
 
+            // create turn page buttons
+            var turnPageParagraph = document.getElementById('turn-page');
+            var turnPage = document.createElement('p');                
+            
+            var previousPageButtonSpan = document.createElement('span');
+            var previousPageButton = document.createElement('button');
+            previousPageButton.className = 'btn-primary';
+            previousPageButton.id = previousPage;
+            previousPageButton.textContent = 'Previous'
+            previousPageButtonSpan.appendChild(previousPageButton);
+            
+            var nextPageButtonSpan = document.createElement('span');
+            var nextPageButton = document.createElement('button');
+            nextPageButton.className = 'btn-primary';
+            nextPageButton.id = nextPage;
+            nextPageButton.textContent = 'Next'
+            nextPageButtonSpan.appendChild(nextPageButton);
+
+            turnPage.appendChild(previousPageButtonSpan);
+            turnPage.appendChild(nextPageButtonSpan);
+            turnPageParagraph.appendChild(turnPage);
         });
         
     }
