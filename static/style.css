@@ -1,3 +1,8 @@
+body {
+    color: yellow;
+    background-image: url('stars-in-night-sky.jpg');
+}
+
 @font-face {
     font-family: 'STARWARS';
     src: url('STARWARS.ttf') format('truetype');
@@ -13,4 +18,14 @@ h1, p, table {
 
 .btn-primary, .btn-default {
     border-radius: 5px;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: #428bca;
+}
+
+.modal-content {
+    background-color: black;
+    border-style: solid;
+    border-color: white;
 }
