@@ -47,24 +47,33 @@ app.tableHandler = {
                 var planetPopulationText = document.createTextNode(planetsData[planetIndex].population);
                 planetPopulation.appendChild(planetPopulationText);
 
+                var planetResidents = document.createElement('td');
+                var numberOfResidents = planetsData[planetIndex].residents.length;
+                if (numberOfResidents > 0) {
+                    var planetResidentsButton = document.createElement('button');
+                    planetResidentsButton.className = 'btn-default';
+                    planetResidentsButton.textContent = numberOfResidents.toString() + " resident(s)";
+                    planetResidents.appendChild(planetResidentsButton);
+                } else {
+                    var planetResidentsText = document.createTextNode('No known residents');
+                    planetResidents.appendChild(planetResidentsText);
+                }
+                
                 newRow.appendChild(planetName);
                 newRow.appendChild(planetDiameter);
                 newRow.appendChild(planetClimate);
                 newRow.appendChild(planetTerrain);
                 newRow.appendChild(planetSurface);
                 newRow.appendChild(planetPopulation);
+                newRow.appendChild(planetResidents);
 
                 tableBody.appendChild(newRow);
             }
 
             // add API URLs to turn page buttons
             var previousPageButton = document.getElementById('previous');
-            // previousPageButton.value = previousPage;
-            
             var nextPageButton = document.getElementById('next');
-            // nextPageButton.value = nextPage;
 
-            // activate turn page buttons:
             previousPageButton.onclick = function() {
                 if (previousPage != null) {
                     app.tableHandler.loadTable(previousPage);
@@ -75,7 +84,9 @@ app.tableHandler = {
                 if (nextPage != null) {
                     app.tableHandler.loadTable(nextPage);
                 }
-            }; 
+            };
+
+            
         });   
     },
 
