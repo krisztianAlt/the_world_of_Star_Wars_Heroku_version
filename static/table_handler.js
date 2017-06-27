@@ -6,7 +6,7 @@ app.tableHandler = {
             var previousPage = planetsRequest.previous;
             var nextPage = planetsRequest.next;
             var planetsData = planetsRequest.results;
-            console.log(planetsData);
+            // console.log(planetsData);
             
             // clear screen after turning page:
             var deleteRows = document.getElementsByClassName('table-row');
@@ -52,7 +52,18 @@ app.tableHandler = {
                 if (numberOfResidents > 0) {
                     var planetResidentsButton = document.createElement('button');
                     planetResidentsButton.className = 'btn-default';
+                    planetResidentsButton.classList.add('residents-button');
                     planetResidentsButton.textContent = numberOfResidents.toString() + " resident(s)";
+                    planetResidentsButton.value = planetsData[planetIndex].name;
+                    
+                    // additions for using modal:
+                    var toggleAttribute = document.createAttribute("data-toggle");
+                    toggleAttribute.value = "modal";
+                    planetResidentsButton.setAttributeNode(toggleAttribute);
+                    var targetAttribute = document.createAttribute("data-target");
+                    targetAttribute.value = "#residentsModal";
+                    planetResidentsButton.setAttributeNode(targetAttribute);
+
                     planetResidents.appendChild(planetResidentsButton);
                 } else {
                     var planetResidentsText = document.createTextNode('No known residents');
@@ -86,7 +97,21 @@ app.tableHandler = {
                 }
             };
 
-            
+            // activate Residents buttons:
+            var allResidentsButton = document.getElementsByClassName('residents-button');
+            for (buttonIndex = 0; buttonIndex < allResidentsButton.length; buttonIndex++) {
+                allResidentsButton[buttonIndex].addEventListener('click', function (event) {
+                    var parent = this.parentElement;
+                    clickedPlanet = parent.firstChild.value;
+                    for (planIndex = 0; planIndex < planetsData.length; planIndex++) {
+                        if (planetsData[planIndex].name === clickedPlanet) {
+                            var residentsApis = planetsData[planIndex].residents;
+                            app.tableHandler.showResidents(clickedPlanet, residentsApis);
+                        }
+                    }
+                })
+            }
+
         });   
     },
 
@@ -113,5 +138,70 @@ app.tableHandler = {
         turnPage.appendChild(previousPageButtonSpan);
         turnPage.appendChild(nextPageButtonSpan);
         turnPageParagraph.appendChild(turnPage);
+    },
+
+    showResidents: function (planet, residentsApisInShow) {
+        var modalTitle = document.getElementById('exampleModalLabel');
+        modalTitle.textContent = "Residents of " + planet;
+
+        // delete previuos residents table content:
+        var deleteResidentRows = document.getElementsByClassName('residents-table-row');
+        while (deleteResidentRows.length > 0) {
+            deleteResidentRows[0].remove();
+        }
+
+        // request datas from API and put them into the modal:
+        var residentTable = document.getElementById('residents-table-body');
+        for (residentApiIndex = 0; residentApiIndex < residentsApisInShow.length; residentApiIndex++) {
+            resiApi = residentsApisInShow[residentApiIndex];
+            $.getJSON(resiApi, function(residentRequest){
+                console.log(residentRequest);
+                var newResidentRow = document.createElement('tr');
+                newResidentRow.className = 'residents-table-row';
+
+                var residentName = document.createElement('td');
+                var residentNameText = document.createTextNode(residentRequest.name);
+                residentName.appendChild(residentNameText);
+
+                var residentHeight = document.createElement('td');
+                var residentHeightText = document.createTextNode(residentRequest.height);
+                residentHeight.appendChild(residentHeightText);
+                
+                var residentMass = document.createElement('td');
+                var residentMassText = document.createTextNode(residentRequest.mass);
+                residentMass.appendChild(residentMassText);
+
+                var residentSkin = document.createElement('td');
+                var residentSkinText = document.createTextNode(residentRequest.skin_color);
+                residentSkin.appendChild(residentSkinText);
+
+                var residentHair = document.createElement('td');
+                var residentHairText = document.createTextNode(residentRequest.hair_color);
+                residentHair.appendChild(residentHairText);
+
+                var residentEye = document.createElement('td');
+                var residentEyeText = document.createTextNode(residentRequest.eye_color);
+                residentEye.appendChild(residentEyeText);
+
+                var residentBirth = document.createElement('td');
+                var residentBirthText = document.createTextNode(residentRequest.birth_year);
+                residentBirth.appendChild(residentBirthText);
+
+                var residentGender = document.createElement('td');
+                var residentGenderText = document.createTextNode(residentRequest.gender);
+                residentGender.appendChild(residentGenderText);
+                
+                newResidentRow.appendChild(residentName);
+                newResidentRow.appendChild(residentHeight);
+                newResidentRow.appendChild(residentMass);
+                newResidentRow.appendChild(residentSkin);
+                newResidentRow.appendChild(residentHair);
+                newResidentRow.appendChild(residentEye);
+                newResidentRow.appendChild(residentBirth);
+                newResidentRow.appendChild(residentGender);
+                
+                residentTable.appendChild(newResidentRow); 
+            });
+        };
     }
 }
