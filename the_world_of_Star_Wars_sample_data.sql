@@ -16,7 +16,6 @@ DROP TABLE IF EXISTS public.sw_planet_votes;
 DROP SEQUENCE IF EXISTS public.sw_planet_votes_id_seq;
 CREATE TABLE sw_planet_votes (
     id serial NOT NULL, -- primary key
-    planet_id int, -- id from SWAPI data
     planet_name varchar,
     user_id int, -- foreign key
     submission_time timestamp without time zone

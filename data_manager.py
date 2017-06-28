@@ -47,10 +47,16 @@ def existing_users():
 
 
 def add_new_user(username, password):
-    # query_result('INSERT INTO sw_users (username, password) VALUES (%s, %s)', (username, password))
+    # query_result('INSERT INTO sw_users (username, password) VALUES (%s, %s);', (username, password))
     query_result("INSERT INTO sw_users (username, password) VALUES ('" + username + "', '" + password + "');")
 
 
 def get_user_datas(username):
     user_datas = query_result("SELECT * FROM sw_users WHERE username='" + username + "'")
     return user_datas
+
+
+def add_new_vote(user_name, planet_name, time_now):
+    user_id = query_result("SELECT id FROM sw_users WHERE username = '" + user_name + "';")
+    query_result("INSERT INTO sw_planet_votes (planet_name, user_id, submission_time) VALUES (%s, %s, %s);",
+                 (planet_name, user_id[0][0], time_now))

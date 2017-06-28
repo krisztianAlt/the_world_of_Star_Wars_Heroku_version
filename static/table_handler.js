@@ -6,7 +6,7 @@ app.tableHandler = {
             var previousPage = planetsRequest.previous;
             var nextPage = planetsRequest.next;
             var planetsData = planetsRequest.results;
-            console.log(planetsData);
+            // console.log(planetsData);
             
             // clear screen after turning page:
             var deleteRows = document.getElementsByClassName('table-row');
@@ -79,27 +79,28 @@ app.tableHandler = {
                 newRow.appendChild(planetResidents);
 
                 // add vote button if user logged in:
-                var nameHolder = document.getElementById('identification')
+                let nameHolder = document.getElementById('identification')
                 if (nameHolder !== null) {
                     var planetVote = document.createElement('td');
                     if (planetsData[planetIndex].name === 'unknown') {
                         var noPlanetText = document.createTextNode('No planet')
                         planetVote.appendChild(noPlanetText);
                     } else {
-                        var voteButton = document.createElement('button')
-                        // var nameOfUser = nameHolder.dataset.nameofuser
+                        var nameOfUser = nameHolder.dataset.nameofuser;
+                        var nameOfPlanet = planetsData[planetIndex].name;
                         // console.log(nameHolder)
                         // console.log(nameOfUser)
+                        var voteButton = document.createElement('button')
                         voteButton.className = 'btn-default';
                         voteButton.classList.add('vote-button');
-                        voteButton.textContent = "Vote";
-                        // voteButton.value = planetsData[planetIndex].name;
-                        // var planetIdAttribute = document.createAttribute("data-planet-id");
-                        // planetIdAttribute.value = planetsData[planetIndex].id;
-                        // voteButton.setAttributeNode(planetIdAttribute);
-                        var planetNameAttribute = document.createAttribute("data-planetname");
-                        planetNameAttribute.value = planetsData[planetIndex].name;
-                        voteButton.setAttributeNode(planetNameAttribute);
+                        // voteButton.textContent = "Vote";
+                        var voteLink = document.createElement('a');
+                        voteLink.setAttribute('href', '/vote/'+nameOfUser+'/'+nameOfPlanet)
+                        // var planetNameAttribute = document.createAttribute("data-planetname");
+                        // planetNameAttribute.value = planetsData[planetIndex].name;
+                        var voteLinkText = document.createTextNode('Vote')
+                        voteLink.appendChild(voteLinkText);
+                        voteButton.appendChild(voteLink);
                         planetVote.appendChild(voteButton);
                     }
                     newRow.appendChild(planetVote);
@@ -138,7 +139,6 @@ app.tableHandler = {
                     }
                 })
             }
-
         });   
     },
 

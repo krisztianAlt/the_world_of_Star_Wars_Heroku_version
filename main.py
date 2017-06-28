@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, escape
 import data_manager
+import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 # good infos about using werkzeug:
 # https://stackoverflow.com/questions/23432478/flask-generate-password-hash-not-constant-output
@@ -86,6 +87,14 @@ def logout():
     # remove the username from the session if it is there
     session.pop('username', None)
     return redirect(url_for('main_page'))
+
+
+@app.route('/vote/<user_name>/<planet_name>')
+def vote(user_name, planet_name):
+    time_now = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    data_manager.add_new_vote(user_name, planet_name, time_now)
+    return redirect(url_for('main_page'))
+    # return render_template('index.html', username=user_name)
 
 
 if __name__ == '__main__':
