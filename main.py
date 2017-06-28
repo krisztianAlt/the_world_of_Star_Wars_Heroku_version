@@ -44,6 +44,31 @@ def add_user_to_database():
     return render_template('index.html', registration_succeeded='registration_succeeded')
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def user_login_page():
+    return render_template('login.html')
+
+
+@app.route('/login/user', methods=['GET', 'POST'])
+def login_session():
+    # data validation:
+    username = request.form['username']
+    password = request.form['password']
+    userdatas = data_manager.get_user_datas(username)
+    if len(userdatas) > 0:
+        password_in_database = userdatas[0][2]
+    else:
+        password_in_database = ''
+    login_error_message = "Login failed. Invalid username or password."
+    if (
+        len(username) == 0 or
+        len(password) == 0 or
+        len(userdatas) == 0 or
+        check_password_hash(password_in_database, password) is False
+    ):
+        return render_template('login.html', login_error_message=login_error_message)
+    return render_template('index.html', login_succeeded='login_succeeded', username=username)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -50,4 +50,7 @@ def add_new_user(username, password):
     # query_result('INSERT INTO sw_users (username, password) VALUES (%s, %s)', (username, password))
     query_result("INSERT INTO sw_users (username, password) VALUES ('" + username + "', '" + password + "');")
 
-# print(query_result("SELECT * FROM sw_users"))
+
+def get_user_datas(username):
+    user_datas = query_result("SELECT * FROM sw_users WHERE username='" + username + "'")
+    return user_datas

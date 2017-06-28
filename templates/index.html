@@ -25,18 +25,22 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/">Planet List</a></li>
                 <li><a href="/registration">Registration</a></li>
-                <li><a href="#">Login</a></li>
+                <li><a href="/login">Login</a></li>
+                {% if login_succeeded %}
                 <li><a href="#">Logout</a></li>
                 <li><a href="#">Voting Statistics</a></li>
+                {% endif %}
             </ul>
-            <p class="navbar-text pull-right">USER INFO</p>
+            {% if login_succeeded %}
+            <p class="navbar-text pull-right">{{username}}</p>
+            {% endif %}
         </div>
     </nav>
 
     {% if registration_succeeded %}
         <div class="alert alert-success">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Registration succeeded! The force will be with you. Always.</strong>
+            <strong>Registration succeeded! The force will be with you. Always. Just log in.</strong>
         </div>
     {% endif %}
 
