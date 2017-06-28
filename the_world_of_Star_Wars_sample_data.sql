@@ -33,6 +33,6 @@ ALTER TABLE ONLY sw_planet_votes
     ADD CONSTRAINT fk_sw_user_id FOREIGN KEY (user_id) REFERENCES sw_users(id)
     ON DELETE CASCADE;
 
-INSERT INTO sw_users VALUES (1, 'Freddie Mercury', 'bohemian');
-INSERT INTO sw_users VALUES (2, 'Lord Vader', 'darkside');
+INSERT INTO sw_users VALUES (1, 'Freddie Mercury', 'pbkdf2:sha256:50000$kGrd5vhy$38a8fa35e4a89d47668ab2a9df01a5f00783657c72e1d66965354f9129e47e39');
+INSERT INTO sw_users VALUES (2, 'Lord Vader', 'pbkdf2:sha256:50000$QZXHwTmr$676ad3bad9eca034fa0378802436535f825f642796ce4ecdf2d83b1eabcf0f54');
 SELECT pg_catalog.setval('sw_users_id_seq', 2, true);

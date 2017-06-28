@@ -1,13 +1,19 @@
-from flask import Flask, render_template, request, redirect, url_for
-# import requests
+from flask import Flask, render_template, request, redirect, url_for, session, escape
 import data_manager
 from werkzeug.security import generate_password_hash, check_password_hash
+# good infos about using werkzeug:
+# https://stackoverflow.com/questions/23432478/flask-generate-password-hash-not-constant-output
+
 
 app = Flask(__name__)
+app.secret_key = 'Star Trek is better'
 
 
 @app.route('/')
 def main_page():
+    if 'username' in session:
+        username = session['username']
+        return render_template('index.html', username=username)
     return render_template('index.html')
 
 
@@ -32,6 +38,9 @@ def add_user_to_database():
     if len(password) == 0:
         registration_error_message = 'Empty password field.'
         return render_template('registration.html', registration_error_message=registration_error_message)
+    if len(password) < 5:
+        registration_error_message = 'Password must be at least five characters long.'
+        return render_template('registration.html', registration_error_message=registration_error_message)
     if len(confirm) == 0:
         registration_error_message = 'Empty confirm field.'
         return render_template('registration.html', registration_error_message=registration_error_message)
@@ -55,11 +64,11 @@ def login_session():
     username = request.form['username']
     password = request.form['password']
     userdatas = data_manager.get_user_datas(username)
+    login_error_message = "Login failed. Invalid username or password."
     if len(userdatas) > 0:
         password_in_database = userdatas[0][2]
     else:
         password_in_database = ''
-    login_error_message = "Login failed. Invalid username or password."
     if (
         len(username) == 0 or
         len(password) == 0 or
@@ -67,7 +76,16 @@ def login_session():
         check_password_hash(password_in_database, password) is False
     ):
         return render_template('login.html', login_error_message=login_error_message)
-    return render_template('index.html', login_succeeded='login_succeeded', username=username)
+    # create session for the logged-in user:
+    session['username'] = username
+    return redirect(url_for('main_page'))
+
+
+@app.route('/logout')
+def logout():
+    # remove the username from the session if it is there
+    session.pop('username', None)
+    return redirect(url_for('main_page'))
 
 
 if __name__ == '__main__':
