@@ -7,15 +7,16 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 app = Flask(__name__)
-app.secret_key = 'Star Trek is better'
+app.secret_key = 'Star Trek is almost better'
 
 
+@app.route('/<vote>', methods=['GET', 'POST'])
 @app.route('/')
-def main_page():
+def main_page(vote='no'):
     if 'username' in session:
         username = session['username']
-        return render_template('index.html', username=username)
-    return render_template('index.html')
+        return render_template('index.html', username=username, vote=vote)
+    return render_template('index.html', vote=vote)
 
 
 @app.route('/registration', methods=['GET', 'POST'])
@@ -93,8 +94,7 @@ def logout():
 def vote(user_name, planet_name):
     time_now = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     data_manager.add_new_vote(user_name, planet_name, time_now)
-    return redirect(url_for('main_page'))
-    # return render_template('index.html', username=user_name)
+    return redirect(url_for('main_page', vote='saved'), code=307)
 
 
 if __name__ == '__main__':

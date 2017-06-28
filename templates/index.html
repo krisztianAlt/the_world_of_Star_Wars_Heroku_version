@@ -45,6 +45,13 @@
             <strong>Registration succeeded! The force will be with you. Always. Just log in.</strong>
         </div>
     {% endif %}
+    
+    {% if vote == 'saved' %}
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Vote saved. Impressive. Most impressive.</strong>
+        </div>
+    {% endif %}
 
     <header class="container">
         <div class="row">

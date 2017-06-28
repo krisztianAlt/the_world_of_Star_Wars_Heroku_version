@@ -6,15 +6,12 @@ app.tableHandler = {
             var previousPage = planetsRequest.previous;
             var nextPage = planetsRequest.next;
             var planetsData = planetsRequest.results;
-            // console.log(planetsData);
             
             // clear screen after turning page:
             var deleteRows = document.getElementsByClassName('table-row');
             while (deleteRows.length > 0) {
                 deleteRows[0].remove();
             }
-            // var deleteTurnPageParagraph = document.getElementById('turn-page-paragraph');
-            // deleteTurnPageParagraph.remove();
 
             // create table:
             var tableBody = document.getElementById('table-body');
@@ -88,16 +85,11 @@ app.tableHandler = {
                     } else {
                         var nameOfUser = nameHolder.dataset.nameofuser;
                         var nameOfPlanet = planetsData[planetIndex].name;
-                        // console.log(nameHolder)
-                        // console.log(nameOfUser)
                         var voteButton = document.createElement('button')
                         voteButton.className = 'btn-default';
                         voteButton.classList.add('vote-button');
-                        // voteButton.textContent = "Vote";
                         var voteLink = document.createElement('a');
                         voteLink.setAttribute('href', '/vote/'+nameOfUser+'/'+nameOfPlanet)
-                        // var planetNameAttribute = document.createAttribute("data-planetname");
-                        // planetNameAttribute.value = planetsData[planetIndex].name;
                         var voteLinkText = document.createTextNode('Vote')
                         voteLink.appendChild(voteLinkText);
                         voteButton.appendChild(voteLink);
@@ -171,7 +163,7 @@ app.tableHandler = {
         var modalTitle = document.getElementById('exampleModalLabel');
         modalTitle.textContent = "Residents of " + planet;
 
-        // delete previuos residents table content:
+        // delete previous residents table content:
         var deleteResidentRows = document.getElementsByClassName('residents-table-row');
         while (deleteResidentRows.length > 0) {
             deleteResidentRows[0].remove();
