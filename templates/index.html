@@ -34,7 +34,7 @@
                 {% endif %}
             </ul>
             {% if username %}
-            <p class="navbar-text pull-right">{{username}}</p>
+            <p class="navbar-text pull-right" id="identification" data-nameofuser="{{username}}">{{username}}</p>
             {% endif %}
         </div>
     </nav>
@@ -67,6 +67,9 @@
                     <th>Surface Water Percentage</th>
                     <th>Population</th>
                     <th>Residents</th>
+                    {% if username %}
+                    <th>Vote</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody id="table-body">
