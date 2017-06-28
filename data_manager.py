@@ -19,7 +19,7 @@ def query_result(*query):
         cursor.execute(*query)
         rows = cursor.fetchall()
         # try without list format!
-        # rows = [list(row) for row in rows]
+        rows = [list(row) for row in rows]
     except psycopg2.OperationalError as e:
         print('OperationalError')
         print(e)
@@ -38,3 +38,5 @@ def query_result(*query):
             conn.close()
     return rows
 
+
+print(query_result("SELECT * FROM sw_users;"))
