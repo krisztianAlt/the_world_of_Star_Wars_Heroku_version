@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 # import requests
 import data_manager
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
@@ -37,7 +38,9 @@ def add_user_to_database():
     if password != confirm:
         registration_error_message = 'Password does not match the confirm password.'
         return render_template('registration.html', registration_error_message=registration_error_message)
-    data_manager.add_new_user(username, password)
+    # salting password and save user:
+    salted_password = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
+    data_manager.add_new_user(username, salted_password)
     return render_template('index.html', registration_succeeded='registration_succeeded')
 
 

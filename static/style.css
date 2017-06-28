@@ -69,3 +69,7 @@ input::-webkit-input-placeholder {
     text-align: center;
     color: red;
 }
+
+.alert-success {
+    text-align: center;
+}
