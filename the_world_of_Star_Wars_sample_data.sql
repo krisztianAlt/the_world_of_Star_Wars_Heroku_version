@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS public.sw_users;
 DROP SEQUENCE IF EXISTS public.sw_users_id_seq;
 CREATE TABLE sw_users (
     id serial NOT NULL, -- primary key
-    username varchar,
+    username varchar UNIQUE,
     password varchar
 );
 

@@ -18,7 +18,6 @@ def query_result(*query):
         cursor, conn = database_connection()
         cursor.execute(*query)
         rows = cursor.fetchall()
-        # try without list format!
         rows = [list(row) for row in rows]
     except psycopg2.OperationalError as e:
         print('OperationalError')
@@ -32,11 +31,23 @@ def query_result(*query):
         print('IntegrityError')
         print(e)
         rows = ""
-        # raise e from query_result()
+        raise e from query_result()
     finally:
         if conn:
             conn.close()
     return rows
 
 
-print(query_result("SELECT * FROM sw_users;"))
+def existing_users():
+    existing_usernames = []
+    existing_users = query_result("SELECT username FROM sw_users")
+    for user in existing_users:
+        existing_usernames.append(user[0])
+    return existing_usernames
+
+
+def add_new_user(username, password):
+    # query_result('INSERT INTO sw_users (username, password) VALUES (%s, %s)', (username, password))
+    query_result("INSERT INTO sw_users (username, password) VALUES ('" + username + "', '" + password + "');")
+
+# print(query_result("SELECT * FROM sw_users"))
