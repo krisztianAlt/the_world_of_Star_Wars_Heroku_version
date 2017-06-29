@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, escape
+from flask import Flask, render_template, request, redirect, url_for, session, escape, json
 import data_manager
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -90,11 +90,24 @@ def logout():
     return redirect(url_for('main_page'))
 
 
-@app.route('/vote/<user_name>/<planet_name>')
-def vote(user_name, planet_name):
+# voting with AJAX (good tips: https://stackoverflow.com/questions/33211811/getting-400-bad-request)
+@app.route('/vote', methods=['POST'])
+def vote():
+    datas_from_Javascript = request.form.to_dict()
+    user_name = datas_from_Javascript['user_name']
+    planet_name = datas_from_Javascript['planet_name']
     time_now = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-    data_manager.add_new_vote(user_name, planet_name, time_now)
-    return redirect(url_for('main_page', vote='saved'), code=307)
+    print(user_name, planet_name)
+    # data_manager.add_new_vote(user_name, planet_name, time_now)
+    return json.dumps({'answer': 'This is the answer of Python.'})
+
+
+# original version of voting -- without AJAX:
+# @app.route('/vote/<user_name>/<planet_name>')
+# def vote(user_name, planet_name):
+#     time_now = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+#     data_manager.add_new_vote(user_name, planet_name, time_now)
+#     return redirect(url_for('main_page', vote='saved'), code=307)
 
 
 if __name__ == '__main__':

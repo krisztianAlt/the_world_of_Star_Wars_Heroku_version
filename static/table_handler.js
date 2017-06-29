@@ -75,7 +75,7 @@ app.tableHandler = {
                 newRow.appendChild(planetPopulation);
                 newRow.appendChild(planetResidents);
 
-                // add vote button if user logged in:
+                // add vote button if user logged in -- AJAX version:
                 let nameHolder = document.getElementById('identification')
                 if (nameHolder !== null) {
                     var planetVote = document.createElement('td');
@@ -88,15 +88,44 @@ app.tableHandler = {
                         var voteButton = document.createElement('button')
                         voteButton.className = 'btn-default';
                         voteButton.classList.add('vote-button');
-                        var voteLink = document.createElement('a');
-                        voteLink.setAttribute('href', '/vote/'+nameOfUser+'/'+nameOfPlanet)
-                        var voteLinkText = document.createTextNode('Vote')
-                        voteLink.appendChild(voteLinkText);
-                        voteButton.appendChild(voteLink);
+                        voteButton.textContent = 'Vote';
+
+                        // add datas to the button:
+                        var userNameAttribute = document.createAttribute("data-username");
+                        userNameAttribute.value = nameOfUser;
+                        voteButton.setAttributeNode(userNameAttribute);
+                        var planetNameAttribute = document.createAttribute("data-planetname");
+                        planetNameAttribute.value = nameOfPlanet;
+                        voteButton.setAttributeNode(planetNameAttribute);
+
                         planetVote.appendChild(voteButton);
                     }
                     newRow.appendChild(planetVote);
                 }
+                
+                // Original version of adding vote button -- without AJAX:
+                //
+                // let nameHolder = document.getElementById('identification')
+                // if (nameHolder !== null) {
+                //     var planetVote = document.createElement('td');
+                //     if (planetsData[planetIndex].name === 'unknown') {
+                //         var noPlanetText = document.createTextNode('No planet')
+                //         planetVote.appendChild(noPlanetText);
+                //     } else {
+                //         var nameOfUser = nameHolder.dataset.nameofuser;
+                //         var nameOfPlanet = planetsData[planetIndex].name;
+                //         var voteButton = document.createElement('button')
+                //         voteButton.className = 'btn-default';
+                //         voteButton.classList.add('vote-button');
+                //         var voteLink = document.createElement('a');
+                //         voteLink.setAttribute('href', '/vote/'+nameOfUser+'/'+nameOfPlanet)
+                //         var voteLinkText = document.createTextNode('Vote')
+                //         voteLink.appendChild(voteLinkText);
+                //         voteButton.appendChild(voteLink);
+                //         planetVote.appendChild(voteButton);
+                //     }
+                //     newRow.appendChild(planetVote);
+                // }
 
                 tableBody.appendChild(newRow);
             }
@@ -130,8 +159,35 @@ app.tableHandler = {
                         }
                     }
                 })
+            };
+
+            // activate Vote buttons:
+            var allVoteButton = document.getElementsByClassName('vote-button');
+            for (voteButtonIndex = 0; voteButtonIndex < allVoteButton.length; voteButtonIndex++) {
+                allVoteButton[voteButtonIndex].addEventListener('click', function (event) {
+                    var parent = this.parentElement;
+                    userToPlanet = parent.firstChild.dataset.username;
+                    clickedPlanet = parent.firstChild.dataset.planetname;
+                    var dataPackage = {'user_name': userToPlanet, 'planet_name': clickedPlanet};
+                    // AJAX:
+                    console.log('BEFORE SENDING')
+                    $.ajax({
+                        type: "POST",
+                        url: 'vote',
+                        data: dataPackage,
+                        // dataType : "text",
+                        success : function(){
+                            // data = JSON.parse(data);
+                            // console.log("DONE! " + data);
+                            console.log('Here is Javascript!')
+                        }
+                        // success: success,
+                        // dataType: dataType
+                    });
+
+                })
             }
-        });   
+        });
     },
 
     showTurningPageButtons: function() {
