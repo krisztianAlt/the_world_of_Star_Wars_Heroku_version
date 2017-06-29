@@ -375,5 +375,73 @@ app.tableHandler = {
                 }
             })
         });
+    },
+
+    flyTie: function() {
+        var callButton = document.getElementById('call-TIE');
+        callButton.addEventListener('click', function(event) {
+            // delete previous screen content:
+            var deleteFlyingElements = document.getElementById("hangar");
+            while (deleteFlyingElements.firstChild) {
+                deleteFlyingElements.removeChild(deleteFlyingElements.firstChild);
+            };
+
+            // open screen bar, display background image without TIE Fighter:
+            var flyingBar = document.getElementById('hangar');
+            $("#hangar").slideUp();
+            for (numberOfParagraphs = 1; numberOfParagraphs < 6; numberOfParagraphs++) {
+                var newParagraph = document.createElement('p');
+                newParagraph.className = 'hangar-para';
+                newParagraph.textContent = 'para';
+                flyingBar.appendChild(newParagraph);
+            };
+            flyingBar.style.color = 'black';
+            flyingBar.style.backgroundImage = "url('static/stars-in-night-sky.jpg')";
+            flyingBar.style.backgroundRepeat = 'no-repeat';
+            flyingBar.style.backgroundPosition = 'center center';
+            flyingBar.style.backgroundSize = '100%';
+            $("#hangar").slideDown('slow');
+
+            // a little pause, then...
+            var waitIndex = 1;
+            function waitForTie () {
+                setTimeout(
+                    function () {
+                        waitIndex = waitIndex + 1;
+                        if (waitIndex < 10) {
+                            waitForTie();
+                        } else {
+                            // ...TIE Fighter is coming:
+                            var tieXPosition = 80;
+                            flyingBar.style.backgroundImage = "url('static/Tie-Fighter-01-icon.png'), url('static/stars-in-night-sky.jpg')";
+                            flyingBar.style.backgroundRepeat = 'no-repeat, no-repeat';
+                            flyingBar.style.backgroundPosition = tieXPosition.toString()+'% center, center center';
+                            flyingBar.style.backgroundSize = '0%, 100%';
+                            var tieSize = 1;
+                            function flying () {
+                                setTimeout(
+                                    function () {
+                                        flyingBar.style.backgroundPosition = tieXPosition.toString()+'% center, center center';
+                                        flyingBar.style.backgroundSize = tieSize.toString()+'%, 100%';
+                                        tieXPosition = tieXPosition - 1;
+                                        console.log('Tie is flying');
+                                        tieSize = tieSize + 0.2;
+                                        if (tieSize < 25) {
+                                            flying();
+                                        } else {
+                                            $("#hangar").slideUp('slow');
+                                        }
+                                    },
+                                    30
+                                )
+                            }
+                            flying();
+                        }
+                    },
+                    100
+                )
+            }
+            waitForTie();
+        })
     }
 }

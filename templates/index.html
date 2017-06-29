@@ -31,6 +31,7 @@
                 {% if username %}
                 <li><a href="/logout">Logout</a></li>
                 {% endif %}
+                <li><a id="call-TIE" href="#">Hangar</a></li>
                 <li><a id='vote-statistics-button' data-toggle="modal" href="#votesModal">Voting Statistics</a></li>
             </ul>
             {% if username %}
@@ -38,6 +39,10 @@
             {% endif %}
         </div>
     </nav>
+
+    <div id="hangar">
+        <!--here comes TIE-Fighter-->
+    </div>
 
     {% if registration_succeeded %}
         <div class="alert alert-success">
@@ -147,6 +152,7 @@
             </div>
         </div>
     </div>
+
 </div>
 </body>
 </html>
