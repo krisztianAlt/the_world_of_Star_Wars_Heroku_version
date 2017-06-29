@@ -25,14 +25,14 @@
             <ul class="nav navbar-nav">
                 <li><a href="/">Planet List</a></li>
                 {% if not username %}
-                <li><a href="/registration">Registration</a></li>
-                <li><a href="/login">Login</a></li>
+                    <li><a href="/registration">Registration</a></li>
+                    <li><a href="/login">Login</a></li>
                 {% endif %}
                 {% if username %}
-                <li><a href="/logout">Logout</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                    <li><a id='vote-statistics-button' data-toggle="modal" href="#votesModal">Voting Statistics</a></li>
+                    <li><a id="call-TIE" href="#">Look Into Space</a></li>
                 {% endif %}
-                <li><a id="call-TIE" href="#">Hangar</a></li>
-                <li><a id='vote-statistics-button' data-toggle="modal" href="#votesModal">Voting Statistics</a></li>
             </ul>
             {% if username %}
             <p class="navbar-text pull-right" id="identification" data-nameofuser="{{username}}">{{username}}</p>
@@ -40,7 +40,7 @@
         </div>
     </nav>
 
-    <div id="hangar">
+    <div id="space">
         <!--here comes TIE-Fighter-->
     </div>
 
@@ -152,7 +152,12 @@
             </div>
         </div>
     </div>
-
-</div>
+    
+    <audio id="tie-sound">
+        <source src="static/TIE jobbrol balra lassabb.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+       
+<!--</div>-->
 </body>
 </html>
