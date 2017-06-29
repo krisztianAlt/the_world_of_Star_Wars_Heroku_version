@@ -178,10 +178,19 @@ app.tableHandler = {
                             answerFromPython = JSON.parse(response).answer;
                             console.log(answerFromPython);
 
-                            // create info line about saving in HTML:
+                            // CREATE INFO LINE IN HTML ABOUT SAVING
+                            // Create div:
+                            var savingMessagePlace = document.getElementById('place-of-saving-message');
+                            var savingMessageDiv = document.createElement('div');
+                            savingMessageDiv.className = 'alert alert-success';
+                            savingMessageDiv.id = 'vote-saved';
+                            savingMessagePlace.appendChild(savingMessageDiv);
+                            
+                            // create close button:
                             var voteSavedMessage = document.getElementById('vote-saved');
                             
                             var closeMessageButton = document.createElement('button');
+                            closeMessageButton.type = 'button';
                             closeMessageButton.className = 'close';
                             var dismissAttribute = document.createAttribute('data-dismiss');
                             dismissAttribute.value = 'alert';
@@ -193,13 +202,16 @@ app.tableHandler = {
                             var spanElementInButton = document.createElement('span');
                             var ariaHiddenAttribute = document.createAttribute('aria-hidden');
                             ariaHiddenAttribute.value = 'true';
-                            spanElementInButton.setAttribute(ariaHiddenAttribute);
-                            spanElementInButton.textContent = '&times;';
+                            spanElementInButton.setAttributeNode(ariaHiddenAttribute);
+                            spanElementInButton.innerHTML = '&times;';
                             closeMessageButton.appendChild(spanElementInButton);
                             
                             voteSavedMessage.appendChild(closeMessageButton);
                             
-                            voteSavedMessage.textContent = "Vote saved. Impressive. Most impressive."
+                            // add text to the info line:
+                            var messageText = document.createElement('p');
+                            messageText.textContent = "Vote saved. Impressive. Most impressive.";
+                            voteSavedMessage.appendChild(messageText);
                         },
                         error: function(error) {
                             console.log(error);
