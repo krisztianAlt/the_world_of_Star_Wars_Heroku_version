@@ -18,7 +18,7 @@
     src: url('STARWARS.ttf') format('truetype');
 }
 
-h1, p, table, .container-fluid {
+h1, p, table, .container-fluid, .modal-title {
     font-family: 'STARWARS', sans-serif;
 }
 

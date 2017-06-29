@@ -31,7 +31,7 @@
                 {% if username %}
                 <li><a href="/logout">Logout</a></li>
                 {% endif %}
-                <li><a href="#">Voting Statistics</a></li>
+                <li><a id='vote-statistics-button' data-toggle="modal" href="#votesModal">Voting Statistics</a></li>
             </ul>
             {% if username %}
             <p class="navbar-text pull-right" id="identification" data-nameofuser="{{username}}">{{username}}</p>
@@ -88,7 +88,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel"></h4>
+                    <h4 class="modal-title" id="residentsModalLabel"></h4>
                 </div>
                 
                 <div class="modal-body">
@@ -118,6 +118,35 @@
         </div>
     </div>
 
+    <!--voting statistics modal-->
+    <div class="modal fade" id="votesModal" tabindex="-1" role="dialog" aria-labelledby="votesModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="votesModalLabel">Best Of Planets</h4>
+                </div>
+                
+                <div class="modal-body">
+                    <table class="table-bordered table-hover table-condensed table-responsive" id="votes-table" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Planet Name</th>
+                                <th>Received Votes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="votes-table-body">
+                            <!--here come table rows from Javascript-->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

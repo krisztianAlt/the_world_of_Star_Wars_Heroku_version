@@ -60,3 +60,8 @@ def add_new_vote(user_name, planet_name, time_now):
     user_id = query_result("SELECT id FROM sw_users WHERE username = '" + user_name + "';")
     query_result("INSERT INTO sw_planet_votes (planet_name, user_id, submission_time) VALUES (%s, %s, %s);",
                  (planet_name, user_id[0][0], time_now))
+
+
+def get_votes_table():
+    votes_table = query_result("SELECT")
+    return votes_table

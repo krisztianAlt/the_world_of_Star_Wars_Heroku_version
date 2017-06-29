@@ -75,7 +75,7 @@ app.tableHandler = {
                 newRow.appendChild(planetPopulation);
                 newRow.appendChild(planetResidents);
 
-                // add vote button if user logged in -- AJAX version:
+                // add vote button if user logged in -- to the AJAX version:
                 let nameHolder = document.getElementById('identification')
                 if (nameHolder !== null) {
                     var planetVote = document.createElement('td');
@@ -176,7 +176,7 @@ app.tableHandler = {
                         data: dataPackage,
                         success : function(response){
                             answerFromPython = JSON.parse(response).answer;
-                            console.log(answerFromPython);
+                            console.log('Message from Python: ' + answerFromPython);
 
                             // CREATE INFO LINE IN HTML ABOUT SAVING
 
@@ -256,7 +256,7 @@ app.tableHandler = {
     },
 
     showResidents: function (planet, residentsApisInShow) {
-        var modalTitle = document.getElementById('exampleModalLabel');
+        var modalTitle = document.getElementById('residentsModalLabel');
         modalTitle.textContent = "Residents of " + planet;
 
         // delete previous residents table content:
@@ -270,7 +270,6 @@ app.tableHandler = {
         for (residentApiIndex = 0; residentApiIndex < residentsApisInShow.length; residentApiIndex++) {
             resiApi = residentsApisInShow[residentApiIndex];
             $.getJSON(resiApi, function(residentRequest){
-                console.log(residentRequest);
                 var newResidentRow = document.createElement('tr');
                 newResidentRow.className = 'residents-table-row';
 
@@ -318,5 +317,28 @@ app.tableHandler = {
                 residentTable.appendChild(newResidentRow); 
             });
         };
+    },
+
+    getVoteStatistics: function() {
+        // delete previous table content:
+        var deleteVoteStatisticsRows = document.getElementsByClassName('vote-statistics-table-row');
+        while (deleteVoteStatisticsRows.length > 0) {
+            deleteVoteStatisticsRows[0].remove();
+        }
+
+        // request datas from API and put them into the modal:
+        var votesTable = document.getElementById('votes-table-body');
+
+        $.ajax({
+            type: 'POST',
+            url: 'vote-statistics',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        })
+
     }
 }

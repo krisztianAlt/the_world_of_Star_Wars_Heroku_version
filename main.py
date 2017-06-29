@@ -109,5 +109,11 @@ def vote():
 #     return redirect(url_for('main_page', vote='saved'), code=307)
 
 
+# vote statistics with AJAX
+@app.route('/vote-statistics', methods=['POST'])
+def vote_statistics():
+    votes_table = data_manager.get_votes_table()
+    return json.dumps({'answer': 'Coming soon...'})
+
 if __name__ == '__main__':
     app.run(debug=True)
