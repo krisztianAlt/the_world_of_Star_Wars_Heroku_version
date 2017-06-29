@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, escape, json
+from flask import Flask, render_template, request, redirect, url_for, session, escape, json, jsonify
 import data_manager
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -101,19 +101,13 @@ def vote():
     return json.dumps({'answer': 'Saved!'})
 
 
-# original version of voting -- without AJAX:
-# @app.route('/vote/<user_name>/<planet_name>')
-# def vote(user_name, planet_name):
-#     time_now = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-#     data_manager.add_new_vote(user_name, planet_name, time_now)
-#     return redirect(url_for('main_page', vote='saved'), code=307)
-
-
-# vote statistics with AJAX
+# vote statistics with AJAX:
 @app.route('/vote-statistics', methods=['POST'])
 def vote_statistics():
     votes_table = data_manager.get_votes_table()
-    return json.dumps({'answer': 'Coming soon...'})
+    # magical jsonify:
+    return jsonify(result=votes_table)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

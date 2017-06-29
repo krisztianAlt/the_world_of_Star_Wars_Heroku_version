@@ -320,25 +320,60 @@ app.tableHandler = {
     },
 
     getVoteStatistics: function() {
-        // delete previous table content:
-        var deleteVoteStatisticsRows = document.getElementsByClassName('vote-statistics-table-row');
-        while (deleteVoteStatisticsRows.length > 0) {
-            deleteVoteStatisticsRows[0].remove();
-        }
-
-        // request datas from API and put them into the modal:
-        var votesTable = document.getElementById('votes-table-body');
-
-        $.ajax({
-            type: 'POST',
-            url: 'vote-statistics',
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(error) {
-                console.log(error);
+        var voteStatButton = document.getElementById("vote-statistics-button")
+        voteStatButton.addEventListener("click", function(event) {
+            // delete previous table content:
+            var deleteVoteStatisticsRows = document.getElementsByClassName('vote-statistics-table-row');
+            while (deleteVoteStatisticsRows.length > 0) {
+                deleteVoteStatisticsRows[0].remove();
             }
-        })
 
+            // get datas from Python with AJAX, and put them into the HTML modal's table:
+            var votesTable = document.getElementById('votes-table-body');
+            $.ajax({
+                type: 'POST',
+                url: 'vote-statistics',
+                success: function(response) {
+                    if (response.result.length === 0) {
+                        var newVoteStatRow = document.createElement('tr');
+                        newVoteStatRow.className = 'vote-statistics-table-row';
+
+                        var noVoteMessage = document.createElement('td');
+                        var noVoteMessageText = document.createTextNode('(No votes in database)');
+                        noVoteMessage.appendChild(noVoteMessageText);
+
+                        var noVoteNumber = document.createElement('td');
+                        var noVoteNumberText = document.createTextNode('---');
+                        noVoteNumber.appendChild(noVoteNumberText);
+
+                        newVoteStatRow.appendChild(noVoteMessage);
+                        newVoteStatRow.appendChild(noVoteNumber);
+
+                        votesTable.appendChild(newVoteStatRow);
+                    } else {
+                        for (let index=0; index < response.result.length; index++) {
+                            let newVoteStatRow = document.createElement('tr');
+                            newVoteStatRow.className = 'vote-statistics-table-row';
+
+                            let votedPlanet = document.createElement('td');
+                            let votedPlanetText = document.createTextNode(response.result[index][0]);
+                            votedPlanet.appendChild(votedPlanetText);
+
+                            let voteNumber = document.createElement('td');
+                            let voteNumberText = document.createTextNode(response.result[index][1].toString());
+                            voteNumber.appendChild(voteNumberText);
+
+                            newVoteStatRow.appendChild(votedPlanet);
+                            newVoteStatRow.appendChild(voteNumber);
+
+                            votesTable.appendChild(newVoteStatRow);
+                        }
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            })
+        });
     }
 }

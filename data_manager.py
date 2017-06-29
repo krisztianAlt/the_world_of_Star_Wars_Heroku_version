@@ -63,5 +63,7 @@ def add_new_vote(user_name, planet_name, time_now):
 
 
 def get_votes_table():
-    votes_table = query_result("SELECT")
+    votes_table = query_result("""SELECT planet_name, COUNT(*)
+                               FROM sw_planet_votes GROUP BY planet_name
+                               ORDER BY COUNT(*) DESC, planet_name ASC;""")
     return votes_table
