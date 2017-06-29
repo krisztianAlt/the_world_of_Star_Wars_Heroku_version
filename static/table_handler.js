@@ -179,6 +179,13 @@ app.tableHandler = {
                             console.log(answerFromPython);
 
                             // CREATE INFO LINE IN HTML ABOUT SAVING
+
+                            // delete previous info line if it is already on the screen:
+                            var deleteMessage = document.getElementsByClassName('alert-success');
+                            while (deleteMessage.length > 0) {
+                                deleteMessage[0].remove();
+                            };
+
                             // Create div:
                             var savingMessagePlace = document.getElementById('place-of-saving-message');
                             var savingMessageDiv = document.createElement('div');
@@ -215,7 +222,7 @@ app.tableHandler = {
                         },
                         error: function(error) {
                             console.log(error);
-                        }
+                        },
                     });
 
                 })
