@@ -93,13 +93,12 @@ def logout():
 # voting with AJAX (good tips: https://stackoverflow.com/questions/33211811/getting-400-bad-request)
 @app.route('/vote', methods=['POST'])
 def vote():
-    datas_from_Javascript = request.form.to_dict()
+    datas_from_Javascript = request.form.to_dict()  # get data from JS and convert immutablemultidict to dict
     user_name = datas_from_Javascript['user_name']
     planet_name = datas_from_Javascript['planet_name']
     time_now = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-    print(user_name, planet_name)
-    # data_manager.add_new_vote(user_name, planet_name, time_now)
-    return json.dumps({'answer': 'This is the answer of Python.'})
+    data_manager.add_new_vote(user_name, planet_name, time_now)
+    return json.dumps({'answer': 'Saved!'})
 
 
 # original version of voting -- without AJAX:

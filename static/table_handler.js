@@ -170,19 +170,40 @@ app.tableHandler = {
                     clickedPlanet = parent.firstChild.dataset.planetname;
                     var dataPackage = {'user_name': userToPlanet, 'planet_name': clickedPlanet};
                     // AJAX:
-                    console.log('BEFORE SENDING')
                     $.ajax({
                         type: "POST",
                         url: 'vote',
                         data: dataPackage,
-                        // dataType : "text",
-                        success : function(){
-                            // data = JSON.parse(data);
-                            // console.log("DONE! " + data);
-                            console.log('Here is Javascript!')
+                        success : function(response){
+                            answerFromPython = JSON.parse(response).answer;
+                            console.log(answerFromPython);
+
+                            // create info line about saving in HTML:
+                            var voteSavedMessage = document.getElementById('vote-saved');
+                            
+                            var closeMessageButton = document.createElement('button');
+                            closeMessageButton.className = 'close';
+                            var dismissAttribute = document.createAttribute('data-dismiss');
+                            dismissAttribute.value = 'alert';
+                            closeMessageButton.setAttributeNode(dismissAttribute);
+                            var ariaLabelAttribute = document.createAttribute('aria-label');
+                            ariaLabelAttribute.value = 'Close';
+                            closeMessageButton.setAttributeNode(ariaLabelAttribute);
+                            
+                            var spanElementInButton = document.createElement('span');
+                            var ariaHiddenAttribute = document.createAttribute('aria-hidden');
+                            ariaHiddenAttribute.value = 'true';
+                            spanElementInButton.setAttribute(ariaHiddenAttribute);
+                            spanElementInButton.textContent = '&times;';
+                            closeMessageButton.appendChild(spanElementInButton);
+                            
+                            voteSavedMessage.appendChild(closeMessageButton);
+                            
+                            voteSavedMessage.textContent = "Vote saved. Impressive. Most impressive."
+                        },
+                        error: function(error) {
+                            console.log(error);
                         }
-                        // success: success,
-                        // dataType: dataType
                     });
 
                 })
