@@ -1,16 +1,41 @@
+# LOCAL VERSION:
+# import psycopg2
+
+
+# def database_connection():
+#     try:
+#         connect_str = "dbname='krisztian' user='krisztian' host='localhost'"
+#         conn = psycopg2.connect(connect_str)
+#         conn.autocommit = True
+#         cursor = conn.cursor()
+#     except Exception as e:
+#         print("There is no connection. Invalid dbname, user or password? Please, check it.")
+#         print(e)
+#     return cursor, conn
+
+
+# HEROKU VERSION:
+import os
 import psycopg2
+import urllib
 
 
 def database_connection():
     try:
-        connect_str = "dbname='krisztian' user='krisztian' host='localhost'"
-        conn = psycopg2.connect(connect_str)
-        conn.autocommit = True
-        cursor = conn.cursor()
+        urllib.parse.uses_netloc.append('postgres')
+        url = urllib.parse.urlparse(os.environ.get('DATABASE_URL'))
+        connection = psycopg2.connect(
+            database=url.path[1:],
+            user=url.username,
+            password=url.password,
+            host=url.hostname,
+            port=url.port
+        )
+        cursor = connection.cursor()
     except Exception as e:
         print("There is no connection. Invalid dbname, user or password? Please, check it.")
         print(e)
-    return cursor, conn
+    return cursor, connection
 
 
 def query_result(*query):
