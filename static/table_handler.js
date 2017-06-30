@@ -25,7 +25,11 @@ app.tableHandler = {
                 planetName.appendChild(planetNameText);
                 
                 var planetDiameter = document.createElement('td');
-                var planetDiameterText = document.createTextNode(app.tableHandler.numberFormatter(planetsData[planetIndex].diameter));
+                var diameterData = planetsData[planetIndex].diameter;
+                if (diameterData !== 'unknown') {
+                    diameterData = app.tableHandler.numberFormatter(diameterData) + ' km';
+                }
+                var planetDiameterText = document.createTextNode(diameterData);
                 planetDiameter.appendChild(planetDiameterText);
                                 
                 var planetClimate = document.createElement('td');
@@ -37,11 +41,19 @@ app.tableHandler = {
                 planetTerrain.appendChild(planetTerrainText);
 
                 var planetSurface = document.createElement('td');
-                var planetSurfaceText = document.createTextNode(planetsData[planetIndex].surface_water);
+                var surfaceWaterData = planetsData[planetIndex].surface_water;
+                if (surfaceWaterData !== 'unknown') {
+                    surfaceWaterData = surfaceWaterData + '%';
+                }
+                var planetSurfaceText = document.createTextNode(surfaceWaterData);
                 planetSurface.appendChild(planetSurfaceText);
 
                 var planetPopulation = document.createElement('td');
-                var planetPopulationText = document.createTextNode(planetsData[planetIndex].population);
+                var populationData = planetsData[planetIndex].population;
+                if (populationData !== 'unknown') {
+                    populationData = app.tableHandler.numberFormatter(populationData) + ' people';
+                }
+                var planetPopulationText = document.createTextNode(populationData);
                 planetPopulation.appendChild(planetPopulationText);
 
                 var planetResidents = document.createElement('td');
@@ -278,11 +290,19 @@ app.tableHandler = {
                 residentName.appendChild(residentNameText);
 
                 var residentHeight = document.createElement('td');
-                var residentHeightText = document.createTextNode(residentRequest.height);
+                var heightData = residentRequest.height;
+                if (heightData !== 'unknown') {
+                    heightData = heightData/100 + ' m';
+                }
+                var residentHeightText = document.createTextNode(heightData);
                 residentHeight.appendChild(residentHeightText);
                 
                 var residentMass = document.createElement('td');
-                var residentMassText = document.createTextNode(residentRequest.mass);
+                var massData = residentRequest.mass;
+                if (massData !== 'unknown') {
+                    massData = massData + ' kg';
+                }
+                var residentMassText = document.createTextNode(massData);
                 residentMass.appendChild(residentMassText);
 
                 var residentSkin = document.createElement('td');
