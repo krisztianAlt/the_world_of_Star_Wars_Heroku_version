@@ -23,13 +23,13 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <ul class="nav navbar-nav">
-                <li><a href="https://the-world-of-star-wars.herokuapp.com/">Planet List</a></li>
+                <li><a href="/">Planet List</a></li>
                 {% if not username %}
-                    <li><a href="https://the-world-of-star-wars.herokuapp.com/registration">Registration</a></li>
-                    <li><a href="https://the-world-of-star-wars.herokuapp.com/login">Login</a></li>
+                    <li><a href="/registration">Registration</a></li>
+                    <li><a href="/login">Login</a></li>
                 {% endif %}
                 {% if username %}
-                    <li><a href="https://the-world-of-star-wars.herokuapp.com/logout">Logout</a></li>
+                    <li><a href="/logout">Logout</a></li>
                     <li><a id='vote-statistics-button' data-toggle="modal" href="#votesModal">Voting Statistics</a></li>
                     <li><a id="call-TIE" href="#">Look Into Space</a></li>
                 {% endif %}
