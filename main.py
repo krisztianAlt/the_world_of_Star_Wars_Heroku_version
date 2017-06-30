@@ -10,13 +10,12 @@ app = Flask(__name__)
 app.secret_key = 'Star Trek is almost better'
 
 
-@app.route('/<vote>', methods=['GET', 'POST'])
 @app.route('/')
-def main_page(vote='no'):
+def main_page():
     if 'username' in session:
         username = session['username']
-        return render_template('index.html', username=username, vote=vote)
-    return render_template('index.html', vote=vote)
+        return render_template('index.html', username=username)
+    return render_template('index.html')
 
 
 @app.route('/registration', methods=['GET', 'POST'])

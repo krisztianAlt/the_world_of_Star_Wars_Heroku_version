@@ -153,11 +153,11 @@
         </div>
     </div>
     
-    <audio id="tie-sound">
-        <source src="static/TIE jobbrol balra lassabb.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-       
-<!--</div>-->
+    {% if username %}
+        <audio id="tie-sound">
+            <source src="static/TIE jobbrol balra lassabb.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    {% endif %}
 </body>
 </html>
