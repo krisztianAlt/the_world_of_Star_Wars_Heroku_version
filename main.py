@@ -10,8 +10,8 @@ app = Flask(__name__)
 app.secret_key = 'Star Trek is almost better'
 
 
-@app.route('/<vote>', methods=['GET', 'POST'])
-@app.route('/')
+@app.route('https://the-world-of-star-wars.herokuapp.com/<vote>', methods=['GET', 'POST'])
+@app.route('https://the-world-of-star-wars.herokuapp.com/')
 def main_page(vote='no'):
     if 'username' in session:
         username = session['username']
@@ -19,12 +19,12 @@ def main_page(vote='no'):
     return render_template('index.html', vote=vote)
 
 
-@app.route('/registration', methods=['GET', 'POST'])
+@app.route('https://the-world-of-star-wars.herokuapp.com/registration', methods=['GET', 'POST'])
 def user_registration():
     return render_template('registration.html')
 
 
-@app.route('/registration/add', methods=['POST'])
+@app.route('https://the-world-of-star-wars.herokuapp.com/registration/add', methods=['POST'])
 def add_user_to_database():
     # data validation:
     username = request.form['username']
@@ -55,12 +55,12 @@ def add_user_to_database():
     return render_template('index.html', registration_succeeded='registration_succeeded')
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('https://the-world-of-star-wars.herokuapp.com/login', methods=['GET', 'POST'])
 def user_login_page():
     return render_template('login.html')
 
 
-@app.route('/login/user', methods=['GET', 'POST'])
+@app.route('https://the-world-of-star-wars.herokuapp.com/login/user', methods=['GET', 'POST'])
 def login_session():
     # data validation:
     username = request.form['username']
@@ -83,7 +83,7 @@ def login_session():
     return redirect(url_for('main_page'))
 
 
-@app.route('/logout')
+@app.route('https://the-world-of-star-wars.herokuapp.com/logout')
 def logout():
     # remove the username from the session if it is there
     session.pop('username', None)
@@ -91,7 +91,7 @@ def logout():
 
 
 # voting with AJAX (good tips: https://stackoverflow.com/questions/33211811/getting-400-bad-request)
-@app.route('/vote', methods=['POST'])
+@app.route('https://the-world-of-star-wars.herokuapp.com/vote', methods=['POST'])
 def vote():
     datas_from_Javascript = request.form.to_dict()  # get data from JS and convert immutablemultidict to dict
     user_name = datas_from_Javascript['user_name']
@@ -102,12 +102,12 @@ def vote():
 
 
 # vote statistics with AJAX:
-@app.route('/vote-statistics', methods=['POST'])
+@app.route('https://the-world-of-star-wars.herokuapp.com/vote-statistics', methods=['POST'])
 def vote_statistics():
     votes_table = data_manager.get_votes_table()
     # magical jsonify:
     return jsonify(result=votes_table)
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)
