@@ -152,14 +152,14 @@ app.tableHandler = {
             previousPageButton.onclick = function() {
                 if (previousPage !== null) {
                     console.log('I call prev page: ' + previousPage);
-                    app.tableHandler.loadTable(previousPage);
+                    app.tableHandler.loadTable(previousPage.replace("http" , "https")); // avoid mixed content (http versus https)
                 }
             };
 
             nextPageButton.onclick = function() {
                 if (nextPage !== null) {
                     console.log('I call next page: ' + nextPage);
-                    app.tableHandler.loadTable(nextPage);
+                    app.tableHandler.loadTable(nextPage.replace("http" , "https")); // avoid mixed content (http versus https)
                 }
             };
 
@@ -288,7 +288,7 @@ app.tableHandler = {
         // request datas from API and put them into the modal:
         var residentTable = document.getElementById('residents-table-body');
         for (residentApiIndex = 0; residentApiIndex < residentsApisInShow.length; residentApiIndex++) {
-            resiApi = residentsApisInShow[residentApiIndex];
+            resiApi = residentsApisInShow[residentApiIndex].replace("http" , "https"); // avoid mixed content (http versus https)
             console.log('Now I will enter into getJSON, resiApi is: ' + resiApi);
             $.getJSON(resiApi, function(residentRequest){
                 console.log('I am in getJSON, residentRequest is: ' + residentRequest);
