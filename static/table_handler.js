@@ -147,13 +147,13 @@ app.tableHandler = {
             var nextPageButton = document.getElementById('next');
 
             previousPageButton.onclick = function() {
-                if (previousPage != null) {
+                if (previousPage !== null) {
                     app.tableHandler.loadTable(previousPage);
                 }
             };
 
             nextPageButton.onclick = function() {
-                if (nextPage != null) {
+                if (nextPage !== null) {
                     app.tableHandler.loadTable(nextPage);
                 }
             };
