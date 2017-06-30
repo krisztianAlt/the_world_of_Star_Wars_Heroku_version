@@ -6,7 +6,10 @@ app.tableHandler = {
             var previousPage = planetsRequest.previous;
             var nextPage = planetsRequest.next;
             var planetsData = planetsRequest.results;
-            
+            console.log('Previous page: ' + previousPage);
+            console.log('Next page: ' + nextPage);
+            console.log('Datas:' + planetsData);
+
             // clear screen after turning page:
             var deleteRows = document.getElementsByClassName('table-row');
             while (deleteRows.length > 0) {
@@ -148,12 +151,14 @@ app.tableHandler = {
 
             previousPageButton.onclick = function() {
                 if (previousPage !== null) {
+                    console.log('I call prev page: ' + previousPage);
                     app.tableHandler.loadTable(previousPage);
                 }
             };
 
             nextPageButton.onclick = function() {
                 if (nextPage !== null) {
+                    console.log('I call next page: ' + nextPage);
                     app.tableHandler.loadTable(nextPage);
                 }
             };
@@ -164,9 +169,11 @@ app.tableHandler = {
                 allResidentsButton[buttonIndex].addEventListener('click', function (event) {
                     var parent = this.parentElement;
                     clickedPlanet = parent.firstChild.value;
+                    console.log('Clicked planet: ' + clickedPlanet);
                     for (planIndex = 0; planIndex < planetsData.length; planIndex++) {
                         if (planetsData[planIndex].name === clickedPlanet) {
                             var residentsApis = planetsData[planIndex].residents;
+                            console.log('I call showResidents with this parameters: ' + clickedPlanet + ' ' + residentsApis);
                             app.tableHandler.showResidents(clickedPlanet, residentsApis);
                         }
                     }
@@ -270,6 +277,7 @@ app.tableHandler = {
     showResidents: function (planet, residentsApisInShow) {
         var modalTitle = document.getElementById('residentsModalLabel');
         modalTitle.textContent = "Residents of " + planet;
+        console.log('We are in showResidents, the datas: ' + planet + ' ' + residentsApisInShow);
 
         // delete previous residents table content:
         var deleteResidentRows = document.getElementsByClassName('residents-table-row');
@@ -281,7 +289,9 @@ app.tableHandler = {
         var residentTable = document.getElementById('residents-table-body');
         for (residentApiIndex = 0; residentApiIndex < residentsApisInShow.length; residentApiIndex++) {
             resiApi = residentsApisInShow[residentApiIndex];
+            console.log('Now I will enter into getJSON, resiApi is: ' + resiApi);
             $.getJSON(resiApi, function(residentRequest){
+                console.log('I am in getJSON, residentRequest is: ' + residentRequest);
                 var newResidentRow = document.createElement('tr');
                 newResidentRow.className = 'residents-table-row';
 
