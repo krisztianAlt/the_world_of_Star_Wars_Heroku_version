@@ -25,7 +25,7 @@ app.tableHandler = {
                 planetName.appendChild(planetNameText);
                 
                 var planetDiameter = document.createElement('td');
-                var planetDiameterText = document.createTextNode(planetsData[planetIndex].diameter);
+                var planetDiameterText = document.createTextNode(app.tableHandler.numberFormatter(planetsData[planetIndex].diameter));
                 planetDiameter.appendChild(planetDiameterText);
                                 
                 var planetClimate = document.createElement('td');
@@ -460,5 +460,24 @@ app.tableHandler = {
         } catch (error) {
             // console.log('Not logged in. ' + error);
         }
+    },
+
+    numberFormatter: function(number) {
+        var stringVersionOfNumber = number.toString();
+        var result = '';
+        var threeDigitGroupIndex = 0;
+        var addedDigits = 0;
+        for (currentDigitIndex = stringVersionOfNumber.length - 1; currentDigitIndex > -1; currentDigitIndex--) {
+            let currentDigit = stringVersionOfNumber.charAt(currentDigitIndex);
+            if (threeDigitGroupIndex == 2 && addedDigits < stringVersionOfNumber.length -1) {
+                result = '.' + currentDigit + result;
+                threeDigitGroupIndex = 0;
+            } else {
+                result = currentDigit + result;
+                threeDigitGroupIndex++;
+            }
+            addedDigits++;
+        }
+        return result;
     }
 }
