@@ -405,6 +405,9 @@ app.tableHandler = {
                 deleteFlyingElements.removeChild(deleteFlyingElements.firstChild);
             };
 
+            // deactivate Look Into Space button:
+            callButton.setAttribute("id", "fake");
+
             // open screen bar, display background image without TIE Fighter:
             var flyingBar = document.getElementById('space');
             $("#space").slideUp();
@@ -456,6 +459,8 @@ app.tableHandler = {
                                             flying();
                                         } else {
                                             $("#space").slideUp('slow');
+                                            // reactivate Look Into Space button:
+                                            callButton.setAttribute("id", "call-TIE");
                                         }
                                     },
                                     30
