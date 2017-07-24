@@ -147,7 +147,6 @@ app.tableHandler = {
             var nextPageButton = document.getElementById('next');
 
             previousPageButton.onclick = function() {
-                console.log(previousPage+' '+previousPage.substr(0, 5));
                 if (previousPage !== null) {
                     if (previousPage.substr(0, 5) === 'http:') {
                         app.tableHandler.loadTable(previousPage.replace("http" , "https")); // avoid mixed content (http versus https)
@@ -158,7 +157,6 @@ app.tableHandler = {
             };
 
             nextPageButton.onclick = function() {
-                console.log(nextPage+' '+nextPage.substr(0, 5));
                 if (nextPage !== null) {
                     if (nextPage.substr(0, 5) === 'http:') {
                         app.tableHandler.loadTable(nextPage.replace("http" , "https")); // avoid mixed content (http versus https)
@@ -289,7 +287,11 @@ app.tableHandler = {
         // request datas from API and put them into the modal:
         var residentTable = document.getElementById('residents-table-body');
         for (residentApiIndex = 0; residentApiIndex < residentsApisInShow.length; residentApiIndex++) {
-            resiApi = residentsApisInShow[residentApiIndex].replace("http" , "https"); // avoid mixed content (http versus https)
+            resiApi = residentsApisInShow[residentApiIndex];
+            if (resiApi.substr(0, 5) === 'http:') {
+                    resiApi.replace("http" , "https"); // avoid mixed content (http versus https)
+                }
+            // resiApi = residentsApisInShow[residentApiIndex].replace("http" , "https"); // avoid mixed content (http versus https)
             $.getJSON(resiApi, function(residentRequest){
                 var newResidentRow = document.createElement('tr');
                 newResidentRow.className = 'residents-table-row';
