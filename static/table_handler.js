@@ -147,16 +147,24 @@ app.tableHandler = {
             var nextPageButton = document.getElementById('next');
 
             previousPageButton.onclick = function() {
-                console.log(previousPage);
+                console.log(previousPage+' '+previousPage.substr(0, 5));
                 if (previousPage !== null) {
-                    app.tableHandler.loadTable(previousPage.replace("http" , "https")); // avoid mixed content (http versus https)
+                    if (previousPage.substr(0, 5) === 'http:') {
+                        app.tableHandler.loadTable(previousPage.replace("http" , "https")); // avoid mixed content (http versus https)
+                    } else {
+                        app.tableHandler.loadTable(previousPage);
+                    }
                 }
             };
 
             nextPageButton.onclick = function() {
-                console.log(nextPage);
+                console.log(nextPage+' '+nextPage.substr(0, 5));
                 if (nextPage !== null) {
-                    app.tableHandler.loadTable(nextPage.replace("http" , "https")); // avoid mixed content (http versus https)
+                    if (nextPage.substr(0, 5) === 'http:') {
+                        app.tableHandler.loadTable(nextPage.replace("http" , "https")); // avoid mixed content (http versus https)
+                    } else {
+                        app.tableHandler.loadTable(nextPage);
+                    }
                 }
             };
 
