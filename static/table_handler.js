@@ -147,12 +147,14 @@ app.tableHandler = {
             var nextPageButton = document.getElementById('next');
 
             previousPageButton.onclick = function() {
+                console.log(previousPage);
                 if (previousPage !== null) {
                     app.tableHandler.loadTable(previousPage.replace("http" , "https")); // avoid mixed content (http versus https)
                 }
             };
 
             nextPageButton.onclick = function() {
+                console.log(nextPage);
                 if (nextPage !== null) {
                     app.tableHandler.loadTable(nextPage.replace("http" , "https")); // avoid mixed content (http versus https)
                 }
