@@ -288,13 +288,9 @@ app.tableHandler = {
         var residentTable = document.getElementById('residents-table-body');
         for (residentApiIndex = 0; residentApiIndex < residentsApisInShow.length; residentApiIndex++) {
             resiApi = residentsApisInShow[residentApiIndex];
-            console.log(resiApi);
-            console.log(resiApi.substr(0, 5));
             if (resiApi.substr(0, 5) === 'http:') {
                     resiApi = resiApi.replace("http" , "https"); // avoid mixed content (http versus https)
-                    console.log("In if statement: " + resiApi);
                 }
-            console.log("After replace: " + resiApi);
             // resiApi = residentsApisInShow[residentApiIndex].replace("http" , "https"); // avoid mixed content (http versus https)
             $.getJSON(resiApi, function(residentRequest){
                 var newResidentRow = document.createElement('tr');
