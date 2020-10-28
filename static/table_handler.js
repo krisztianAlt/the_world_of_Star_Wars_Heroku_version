@@ -288,6 +288,7 @@ app.tableHandler = {
         var residentTable = document.getElementById('residents-table-body');
         for (residentApiIndex = 0; residentApiIndex < residentsApisInShow.length; residentApiIndex++) {
             resiApi = residentsApisInShow[residentApiIndex];
+            console.log(resiApi);
             if (resiApi.substr(0, 5) === 'http:') {
                     resiApi.replace("http" , "https"); // avoid mixed content (http versus https)
                 }
