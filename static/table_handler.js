@@ -292,6 +292,7 @@ app.tableHandler = {
             console.log(resiApi.substr(0, 5));
             if (resiApi.substr(0, 5) === 'http:') {
                     resiApi.replace("http" , "https"); // avoid mixed content (http versus https)
+                    console.log("In if statement: " + resiApi);
                 }
             console.log("After replace: " + resiApi);
             // resiApi = residentsApisInShow[residentApiIndex].replace("http" , "https"); // avoid mixed content (http versus https)
